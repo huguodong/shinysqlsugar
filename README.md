@@ -1,0 +1,3 @@
+# ShinySqlsugar
+
+ShinySqlSugar包是一个操作数据库得orm，基于果糖网的sqlsugar的单例模式的二次封装，无需每个项目都要新建dbcontext类，只需要注入ShinySqlSugar就可以使用sqlsugar的所有功能。
