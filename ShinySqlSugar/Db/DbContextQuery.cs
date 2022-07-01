@@ -11,8 +11,11 @@ namespace ShinySqlSugar
     /// </summary>
     public partial class DbContext
     {
+
+
         #region 列表查询
 
+        #region 获取查询实例
         /// <summary>
         /// 获取批量查询实例
         /// </summary>
@@ -20,10 +23,10 @@ namespace ShinySqlSugar
         /// <typeparam name="TResult"></typeparam>
         /// <param name="queryListParams"></param>
         /// <returns></returns>
-        private static ISugarQueryable<TResult> GetSugarQueryable<T, TResult>(QueryListParams<T> queryListParams)
+        public static ISugarQueryable<TResult> GetQueryable<T, TResult>(QueryListParams<T> queryListParams)
         {
             queryListParams.Select = null;
-            var query = GetSugarQueryable(queryListParams).Select<TResult>();//去重
+            var query = GetQueryable(queryListParams).Select<TResult>();//去重
             return query;
         }
 
@@ -33,7 +36,7 @@ namespace ShinySqlSugar
         /// <typeparam name="T"></typeparam>
         /// <param name="queryListParams"></param>
         /// <returns></returns>
-        private static ISugarQueryable<T> GetSugarQueryable<T>(QueryListParams<T> queryListParams)
+        public static ISugarQueryable<T> GetQueryable<T>(QueryListParams<T> queryListParams)
         {
             var query = Db.QueryableWithAttr<T>().WhereIF(queryListParams.Where != null, queryListParams.Where);//条件
 
@@ -47,6 +50,33 @@ namespace ShinySqlSugar
         }
 
         /// <summary>
+        /// 分表批量查询实例
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="queryListParams"></param>
+        /// <returns></returns>
+        public static ISugarQueryable<T> GetSplitQueryable<T>(QueryListParams<T> queryListParams)
+        {
+            var query = GetQueryable(queryListParams);
+            return query.SplitTable(queryListParams.SplitTable);
+        }
+
+        /// <summary>
+        /// 分表批量查询实例
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="queryListParams"></param>
+        /// <returns></returns>
+        public static ISugarQueryable<TResult> GetSplitQueryable<T, TResult>(QueryListParams<T> queryListParams)
+        {
+            var query = GetQueryable<T, TResult>(queryListParams);
+            return query.SplitTable(queryListParams.SplitTable);
+        }
+
+        #endregion
+
+        /// <summary>
         /// 条件查询返回列表
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -54,8 +84,17 @@ namespace ShinySqlSugar
         /// <returns>实体列表</returns>
         public static List<T> QueryList<T>(QueryListParams<T> queryListParams)
         {
-            var query = GetSugarQueryable(queryListParams);
-            return query.ToList();
+            if (queryListParams.SplitTable != null)
+            {
+                var query = GetSplitQueryable(queryListParams);//分表差
+                return query.ToList();
+            }
+            else
+            {
+                var query = GetQueryable(queryListParams);
+                return query.ToList();
+            }
+
         }
 
         /// <summary>
@@ -67,9 +106,17 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static List<TResult> QueryList<T, TResult>(QueryListParams<T> queryListParams)
         {
+            if (queryListParams.SplitTable != null)
+            {
+                var query = GetSplitQueryable<T, TResult>(queryListParams);//分表差
+                return query.ToList();
+            }
+            else
+            {
+                var query = GetQueryable<T, TResult>(queryListParams);
+                return query.ToList();
+            }
 
-            var query = GetSugarQueryable<T, TResult>(queryListParams);
-            return query.ToList();
         }
 
 
@@ -82,8 +129,16 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static async Task<List<TResult>> QueryListAsync<T, TResult>(QueryListParams<T> queryListParams)
         {
-            var query = GetSugarQueryable<T, TResult>(queryListParams);
-            return await query.ToListAsync();
+            if (queryListParams.SplitTable != null)
+            {
+                var query = GetSplitQueryable<T, TResult>(queryListParams);//分表差
+                return await query.ToListAsync();
+            }
+            else
+            {
+                var query = GetQueryable<T, TResult>(queryListParams);
+                return await query.ToListAsync();
+            }
         }
 
         /// <summary>
@@ -95,12 +150,21 @@ namespace ShinySqlSugar
         public static async Task<List<T>> QueryListAsync<T>(QueryListParams<T> queryListParams)
         {
 
-            var query = GetSugarQueryable(queryListParams);
-            return await query.ToListAsync();
+            if (queryListParams.SplitTable != null)
+            {
+                var query = GetSplitQueryable(queryListParams);//分表差
+                return await query.ToListAsync();
+            }
+            else
+            {
+                var query = GetQueryable(queryListParams);
+                return await query.ToListAsync();
+            }
         }
         #endregion
 
         #region 单查
+        #region 获取查询实例
 
         /// <summary>
         /// 获取单查实例
@@ -108,7 +172,7 @@ namespace ShinySqlSugar
         /// <typeparam name="T"></typeparam>
         /// <param name="queryOneParams"></param>
         /// <returns></returns>
-        private static ISugarQueryable<T> GetSugarQueryable<T>(QueryOneParams<T> queryOneParams)
+        public static ISugarQueryable<T> GetQueryable<T>(QueryOneParams<T> queryOneParams)
         {
             var query = Db.QueryableWithAttr<T>().WhereIF(queryOneParams.Where != null, queryOneParams.Where);//条件
             if (!string.IsNullOrEmpty(queryOneParams.OrderBy)) query.OrderBy(queryOneParams.OrderBy);//排序
@@ -124,13 +188,39 @@ namespace ShinySqlSugar
         /// <typeparam name="TResult">返回实体</typeparam>
         /// <param name="queryOneParams"></param>
         /// <returns></returns>
-        private static ISugarQueryable<TResult> GetSugarQueryable<T, TResult>(QueryOneParams<T> queryOneParams)
+        public static ISugarQueryable<TResult> GetQueryable<T, TResult>(QueryOneParams<T> queryOneParams)
         {
             queryOneParams.Select = null;
-            var query = GetSugarQueryable(queryOneParams).Select<TResult>();
+            var query = GetQueryable(queryOneParams).Select<TResult>();
             return query;
         }
 
+
+        /// <summary>
+        /// 分表单查查询实例
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="queryOneParams"></param>
+        /// <returns></returns>
+        public static ISugarQueryable<T> GetSplitQueryable<T>(QueryOneParams<T> queryOneParams)
+        {
+            var query = GetQueryable(queryOneParams);
+            return query.SplitTable(queryOneParams.SplitTable);
+        }
+
+        /// <summary>
+        /// 分表单查查询实例
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="queryOneParams"></param>
+        /// <returns></returns>
+        public static ISugarQueryable<TResult> GetSplitQueryable<T, TResult>(QueryOneParams<T> queryOneParams)
+        {
+            var query = GetQueryable<T, TResult>(queryOneParams);
+            return query.SplitTable(queryOneParams.SplitTable);
+        }
+        #endregion
 
         /// <summary>
         /// 查询第一条
@@ -140,8 +230,17 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static async Task<T> FirstAsync<T>(QueryOneParams<T> queryOneParams)
         {
-            var query = GetSugarQueryable(queryOneParams);
-            return await query.FirstAsync();
+            if (queryOneParams.SplitTable == null)
+            {
+                var query = GetQueryable(queryOneParams);
+                return await query.FirstAsync();
+            }
+            else
+            {
+                var query = GetSplitQueryable(queryOneParams);
+                return await query.FirstAsync();
+            }
+
         }
 
         /// <summary>
@@ -153,8 +252,16 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static async Task<TResult> FirstAsync<T, TResult>(QueryOneParams<T> queryOneParams)
         {
-            var query = GetSugarQueryable<T, TResult>(queryOneParams);
-            return await query.FirstAsync();
+            if (queryOneParams.SplitTable == null)
+            {
+                var query = GetQueryable<T, TResult>(queryOneParams);
+                return await query.FirstAsync();
+            }
+            else
+            {
+                var query = GetSplitQueryable<T, TResult>(queryOneParams);
+                return await query.FirstAsync();
+            }
         }
 
 
@@ -166,8 +273,16 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static T First<T>(QueryOneParams<T> queryOneParams)
         {
-            var query = GetSugarQueryable(queryOneParams);
-            return query.First();
+            if (queryOneParams.SplitTable == null)
+            {
+                var query = GetQueryable(queryOneParams);
+                return query.First();
+            }
+            else
+            {
+                var query = GetSplitQueryable(queryOneParams);
+                return query.First();
+            }
         }
 
         /// <summary>
@@ -179,8 +294,16 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static TResult First<T, TResult>(QueryOneParams<T> queryOneParams)
         {
-            var query = GetSugarQueryable<T, TResult>(queryOneParams);
-            return query.First();
+            if (queryOneParams.SplitTable == null)
+            {
+                var query = GetQueryable<T, TResult>(queryOneParams);
+                return query.First();
+            }
+            else
+            {
+                var query = GetSplitQueryable<T, TResult>(queryOneParams);
+                return query.First();
+            }
         }
 
 
@@ -193,6 +316,7 @@ namespace ShinySqlSugar
         public static T InSingle<T>(object pkValue)
         {
             return Db.QueryableWithAttr<T>().InSingle(pkValue);
+
         }
 
         /// <summary>

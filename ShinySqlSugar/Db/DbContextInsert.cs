@@ -17,7 +17,7 @@ namespace ShinySqlSugar
         /// <typeparam name="T"></typeparam>
         /// <param name="addOneParams"></param>
         /// <returns></returns>
-        private static IInsertable<T> GetInsertable<T>(AddOneParams<T> addOneParams) where T : class, new()
+        public static IInsertable<T> GetInsertable<T>(AddOneParams<T> addOneParams) where T : class, new()
         {
 
             var query = Db.InsertableWithAttr(addOneParams.Entity).IgnoreColumns(addOneParams.IgnoreColumns);
@@ -38,7 +38,7 @@ namespace ShinySqlSugar
         /// <typeparam name="T"></typeparam>
         /// <param name="addOneParams"></param>
         /// <returns></returns>
-        private static SplitInsertable<T> GetSplitInsertable<T>(AddOneParams<T> addOneParams) where T : class, new()
+        public static SplitInsertable<T> GetSplitInsertable<T>(AddOneParams<T> addOneParams) where T : class, new()
         {
 
             var query = GetInsertable(addOneParams);
@@ -96,7 +96,7 @@ namespace ShinySqlSugar
         /// <typeparam name="T"></typeparam>
         /// <param name="addListParams"></param>
         /// <returns></returns>
-        private static IInsertable<T> GetInsertable<T>(AddListParams<T> addListParams) where T : class, new()
+        public static IInsertable<T> GetInsertable<T>(AddListParams<T> addListParams) where T : class, new()
         {
 
             var query = Db.InsertableWithAttr(addListParams.Entities);

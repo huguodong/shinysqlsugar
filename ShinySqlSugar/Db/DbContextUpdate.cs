@@ -11,13 +11,15 @@ namespace ShinySqlSugar
     {
 
         #region 更新单条
+
+        #region 获取实例
         /// <summary>
-        /// 获取插入实例
+        /// 获取修改实例
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="updateOneParams"></param>
         /// <returns></returns>
-        private static IUpdateable<T> GetUpdateable<T>(UpdateOneParams<T> updateOneParams) where T : class, new()
+        public static IUpdateable<T> GetUpdateable<T>(UpdateOneParams<T> updateOneParams) where T : class, new()
         {
             IUpdateable<T> query;
             if (updateOneParams.Entity != null)//有实体
@@ -53,12 +55,14 @@ namespace ShinySqlSugar
         /// <typeparam name="T"></typeparam>
         /// <param name="updateOneParams"></param>
         /// <returns></returns>
-        private static SplitTableUpdateByObjectProvider<T> GetSplitUpdateable<T>(UpdateOneParams<T> updateOneParams) where T : class, new()
+        public static SplitTableUpdateByObjectProvider<T> GetSplitUpdateable<T>(UpdateOneParams<T> updateOneParams) where T : class, new()
         {
             var query = GetUpdateable(updateOneParams);
 
             return query.SplitTable();
         }
+        #endregion
+
 
         /// <summary>
         /// 根据实体更新
@@ -101,13 +105,14 @@ namespace ShinySqlSugar
 
         #region 批量更新
 
+        #region 获取实例
         /// <summary>
         /// 获取批量插入实例
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="updateListParams"></param>
         /// <returns></returns>
-        private static IUpdateable<T> GetUpdateable<T>(UpdateListParams<T> updateListParams) where T : class, new()
+        public static IUpdateable<T> GetUpdateable<T>(UpdateListParams<T> updateListParams) where T : class, new()
         {
             IUpdateable<T> query;
             if (updateListParams.Entities != null)//有实体
@@ -143,12 +148,13 @@ namespace ShinySqlSugar
         /// <typeparam name="T"></typeparam>
         /// <param name="updateListParams"></param>
         /// <returns></returns>
-        private static SplitTableUpdateByObjectProvider<T> GetSplitUpdateable<T>(UpdateListParams<T> updateListParams) where T : class, new()
+        public static SplitTableUpdateByObjectProvider<T> GetSplitUpdateable<T>(UpdateListParams<T> updateListParams) where T : class, new()
         {
 
             var query = GetUpdateable(updateListParams);
             return query.SplitTable();
         }
+        #endregion
 
         /// <summary>
         /// 批量更新

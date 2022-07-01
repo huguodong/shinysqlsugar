@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace ShinySqlSugar
 {
     /// <summary>
-    /// 实体插入参数
+    /// 插入参数
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class AddParams<T> where T : class, new()

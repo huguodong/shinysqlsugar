@@ -1,5 +1,6 @@
 ﻿using SqlSugar;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace ShinySqlSugar
@@ -34,6 +35,12 @@ namespace ShinySqlSugar
         /// 排序类型
         /// </summary>
         public OrderByType OrderByType { get; set; } = OrderByType.Asc;
+
+
+        /// <summary>
+        /// 分表查询条件
+        /// </summary>
+        public Func<List<SplitTableInfo>, IEnumerable<SplitTableInfo>> SplitTable { get; set; }
 
     }
 

@@ -17,7 +17,6 @@ namespace ShinySqlSugar
         {
             base.Context = DbContext.Db.GetConnectionScopeWithAttr<T>();//ioc注入的对象
             itenant = DbContext.Db;
-
         }
     }
 }
