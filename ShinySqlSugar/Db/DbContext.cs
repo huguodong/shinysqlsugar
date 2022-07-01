@@ -2,7 +2,6 @@
 using SqlSugar;
 using System;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace ShinySqlSugar
 {
@@ -29,17 +28,17 @@ namespace ShinySqlSugar
                        if (sql.StartsWith("SELECT"))
                        {
                            Console.ForegroundColor = ConsoleColor.Green;
-                           Console.WriteLine("查询操作==============");
+                           Console.WriteLine($"==============查询{configId}库操作==============");
                        }
                        if (sql.StartsWith("UPDATE") || sql.StartsWith("INSERT"))
                        {
-                           Console.ForegroundColor = ConsoleColor.White;
-                           Console.WriteLine("修改操作==============");
+                           Console.ForegroundColor = ConsoleColor.Blue;
+                           Console.WriteLine($"==============修改{configId}库操作==============");
                        }
                        if (sql.StartsWith("DELETE"))
                        {
-                           Console.ForegroundColor = ConsoleColor.Blue;
-                           Console.WriteLine("删除操作==============");
+                           Console.ForegroundColor = ConsoleColor.Red;
+                           Console.WriteLine($"==============删除{configId}库操作==============");
                        }
                        Console.WriteLine(UtilMethods.GetSqlString(it.DbType, sql, pars));
                        Console.ForegroundColor = ConsoleColor.White;
@@ -59,5 +58,8 @@ namespace ShinySqlSugar
         {
             Db.GetConnection(configId).QueryFilter.Add(new TableFilterItem<T>(expression, isJoinOn));
         }
+
+
+
     }
 }

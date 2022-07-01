@@ -21,6 +21,7 @@ namespace ShinySqlSugar
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             DbConfig.ConnectionConfigs = connectionConfigs;
+
         }
     }
 }

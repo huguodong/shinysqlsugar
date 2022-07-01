@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShinySqlSugar
 {
@@ -41,6 +38,11 @@ namespace ShinySqlSugar
         public Expression<Func<T, object>> WhereColumns { get; set; }
 
 
+
+        /// <summary>
+        /// 指定字段
+        /// </summary>
+        public Expression<Func<T, bool>> SetsColumns { get; set; }
 
     }
 

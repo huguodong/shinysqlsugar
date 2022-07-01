@@ -1,9 +1,4 @@
 ﻿using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ShinySqlSugar
@@ -25,7 +20,7 @@ namespace ShinySqlSugar
         private static IInsertable<T> GetInsertable<T>(AddOneParams<T> addOneParams) where T : class, new()
         {
 
-            var query = Db.Insertable(addOneParams.Entity).IgnoreColumns(addOneParams.IgnoreColumns);
+            var query = Db.InsertableWithAttr(addOneParams.Entity).IgnoreColumns(addOneParams.IgnoreColumns);
             if (addOneParams.InsertColumns != null)
             {
                 query.InsertColumns(addOneParams.InsertColumns);
@@ -104,7 +99,7 @@ namespace ShinySqlSugar
         private static IInsertable<T> GetInsertable<T>(AddListParams<T> addListParams) where T : class, new()
         {
 
-            var query = Db.Insertable(addListParams.Entities);
+            var query = Db.InsertableWithAttr(addListParams.Entities);
             if (addListParams.InsertColumns != null)
             {
                 query = query.InsertColumns(addListParams.InsertColumns);
