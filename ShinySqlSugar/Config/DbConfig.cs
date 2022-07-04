@@ -13,6 +13,25 @@ namespace ShinySqlSugar
         /// </summary>
         public static List<ConnectionConfig> ConnectionConfigs = new List<ConnectionConfig>();
 
+        /// <summary>
+        /// 动态表过滤器配置
+        /// </summary>
+        public static List<TableFilters> Filters = new List<TableFilters>();
+    }
 
+    /// <summary>
+    /// 表过滤器
+    /// </summary>
+    public class TableFilters
+    {
+        /// <summary>
+        /// 数据库ConfigId
+        /// </summary>
+        public string ConfigId { get; set; }
+
+        /// <summary>
+        /// 过滤器列表
+        /// </summary>
+        public List<SqlFilterItem> SqlFilterItems { get; set; }
     }
 }
