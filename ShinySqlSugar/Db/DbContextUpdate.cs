@@ -21,32 +21,32 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static IUpdateable<T> GetUpdateable<T>(UpdateOneParams<T> updateOneParams) where T : class, new()
         {
-            IUpdateable<T> query;
+            IUpdateable<T> updateable;
             if (updateOneParams.Entity != null)//有实体
             {
-                query = Db.UpdateableWithAttr(updateOneParams.Entity).IgnoreColumns(updateOneParams.IgnoreNullColumns);
+                updateable = Db.UpdateableWithAttr(updateOneParams.Entity).IgnoreColumns(updateOneParams.IgnoreNullColumns);
                 if (updateOneParams.IgnoreColumns != null)
                 {
-                    query.IgnoreColumns(updateOneParams.IgnoreColumns);
+                    updateable.IgnoreColumns(updateOneParams.IgnoreColumns);
                 }
                 if (updateOneParams.UpdateColumns != null)
                 {
-                    query.UpdateColumns(updateOneParams.UpdateColumns);
+                    updateable.UpdateColumns(updateOneParams.UpdateColumns);
                 }
                 if (updateOneParams.WhereColumns != null)
                 {
-                    query.WhereColumns(updateOneParams.WhereColumns);
+                    updateable.WhereColumns(updateOneParams.WhereColumns);
                 }
             }
             else//无实体
             {
-                query = Db.UpdateableWithAttr<T>().SetColumns(updateOneParams.SetsColumns);
+                updateable = Db.UpdateableWithAttr<T>().SetColumns(updateOneParams.SetsColumns);
             }
             if (updateOneParams.Where != null)
             {
-                query.Where(updateOneParams.Where);
+                updateable.Where(updateOneParams.Where);
             }
-            return query;
+            return updateable;
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static SplitTableUpdateByObjectProvider<T> GetSplitUpdateable<T>(UpdateOneParams<T> updateOneParams) where T : class, new()
         {
-            var query = GetUpdateable(updateOneParams);
+            var updateable = GetUpdateable(updateOneParams);
 
-            return query.SplitTable();
+            return updateable.SplitTable();
         }
         #endregion
 
@@ -114,32 +114,32 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static IUpdateable<T> GetUpdateable<T>(UpdateListParams<T> updateListParams) where T : class, new()
         {
-            IUpdateable<T> query;
+            IUpdateable<T> updateable;
             if (updateListParams.Entities != null)//有实体
             {
-                query = Db.UpdateableWithAttr(updateListParams.Entities);
+                updateable = Db.UpdateableWithAttr(updateListParams.Entities);
                 if (updateListParams.IgnoreColumns != null)
                 {
-                    query.IgnoreColumns(updateListParams.IgnoreColumns);
+                    updateable.IgnoreColumns(updateListParams.IgnoreColumns);
                 }
                 if (updateListParams.UpdateColumns != null)
                 {
-                    query.UpdateColumns(updateListParams.UpdateColumns);
+                    updateable.UpdateColumns(updateListParams.UpdateColumns);
                 }
                 if (updateListParams.WhereColumns != null)
                 {
-                    query.WhereColumns(updateListParams.WhereColumns);
+                    updateable.WhereColumns(updateListParams.WhereColumns);
                 }
             }
             else//无实体
             {
-                query = Db.UpdateableWithAttr<T>().SetColumns(updateListParams.SetsColumns);
+                updateable = Db.UpdateableWithAttr<T>().SetColumns(updateListParams.SetsColumns);
             }
             if (updateListParams.Where != null)
             {
-                query.Where(updateListParams.Where);
+                updateable.Where(updateListParams.Where);
             }
-            return query;
+            return updateable;
         }
 
         /// <summary>
@@ -151,8 +151,8 @@ namespace ShinySqlSugar
         public static SplitTableUpdateByObjectProvider<T> GetSplitUpdateable<T>(UpdateListParams<T> updateListParams) where T : class, new()
         {
 
-            var query = GetUpdateable(updateListParams);
-            return query.SplitTable();
+            var updateable = GetUpdateable(updateListParams);
+            return updateable.SplitTable();
         }
         #endregion
 

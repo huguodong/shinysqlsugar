@@ -15,10 +15,16 @@ namespace ShinySqlSugar
         /// </summary>
         public Expression<Func<T, bool>> Where { get; set; }
 
+
+        /// <summary>
+        /// 条件语句表达式:对应sql的where
+        /// </summary>
+        public Expression<Func<T, object>> SelectExp { get; set; }
+
         /// <summary>
         /// 输出字段:对应sql的select
         /// </summary>
-        public Expression<Func<T, object>> Select { get; set; }
+        public string Select { get; set; }
 
         /// <summary>
         /// 排序:字符串

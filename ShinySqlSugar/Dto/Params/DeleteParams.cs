@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +23,11 @@ namespace ShinySqlSugar
         /// 分表条件
         /// </summary>
         public Func<List<SplitTableInfo>, IEnumerable<SplitTableInfo>> SplitTable { get; set; }
+
+        /// <summary>
+        /// 条件语句:对应sql的where
+        /// </summary>
+        public Expression<Func<T, bool>> WhereExp { get; set; }
 
     }
 

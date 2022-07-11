@@ -26,9 +26,9 @@ namespace ShinySqlSugar
                     var filter = DbConfig.Filters.Where(it => it.ConfigId == configId).FirstOrDefault();//获取表过滤器
                     if (filter != null)//如果有个表过滤器
                     {
-                        filter.SqlFilterItems.ForEach(it =>
+                        filter.SqlFilterItems.ForEach(item =>
                         {
-                            db.GetConnection(configId).QueryFilter.Add(it);//添加过滤器
+                            db.GetConnection(configId).QueryFilter.Add(item);//添加过滤器
                         });
                     }
                     db.GetConnection(configId).Aop.OnLogExecuting = (sql, pars) =>

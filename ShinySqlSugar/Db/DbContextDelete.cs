@@ -20,8 +20,13 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static IDeleteable<T> GetDeleteable<T>(DeleteOneParams<T> deleteOneParams) where T : class, new()
         {
-            var query = Db.DeleteableWithAttr(deleteOneParams.Entity);
-            return query;
+            var deleteable = deleteOneParams.Entity == null ? Db.DeleteableWithAttr<T>() : Db.DeleteableWithAttr(deleteOneParams.Entity);
+            if (deleteOneParams.WhereExp != null)
+            {
+                deleteable.Where(deleteOneParams.WhereExp);
+            }
+            return deleteable;
+
         }
         #endregion
         /// <summary>
@@ -91,8 +96,12 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static IDeleteable<T> GetDeleteable<T>(DeleteListParams<T> deleteListParams) where T : class, new()
         {
-            var query = Db.DeleteableWithAttr(deleteListParams.Entities);
-            return query;
+            var deleteable = deleteListParams.Entities == null ? Db.DeleteableWithAttr<T>() : Db.DeleteableWithAttr(deleteListParams.Entities);
+            if (deleteListParams.WhereExp != null)
+            {
+                deleteable.Where(deleteListParams.WhereExp);
+            }
+            return deleteable;
         }
         #endregion
         #endregion

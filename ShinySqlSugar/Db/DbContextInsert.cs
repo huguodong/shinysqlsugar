@@ -20,16 +20,16 @@ namespace ShinySqlSugar
         public static IInsertable<T> GetInsertable<T>(AddOneParams<T> addOneParams) where T : class, new()
         {
 
-            var query = Db.InsertableWithAttr(addOneParams.Entity).IgnoreColumns(addOneParams.IgnoreColumns);
+            var insertable = Db.InsertableWithAttr(addOneParams.Entity).IgnoreColumns(addOneParams.IgnoreColumns);
             if (addOneParams.InsertColumns != null)
             {
-                query.InsertColumns(addOneParams.InsertColumns);
+                insertable.InsertColumns(addOneParams.InsertColumns);
             }
             if (addOneParams.IsSpliteTable)
             {
-                query.SplitTable();
+                insertable.SplitTable();
             }
-            return query;
+            return insertable;
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace ShinySqlSugar
         public static SplitInsertable<T> GetSplitInsertable<T>(AddOneParams<T> addOneParams) where T : class, new()
         {
 
-            var query = GetInsertable(addOneParams);
-            return query.SplitTable();
+            var insertable = GetInsertable(addOneParams);
+            return insertable.SplitTable();
         }
 
 
@@ -99,12 +99,12 @@ namespace ShinySqlSugar
         public static IInsertable<T> GetInsertable<T>(AddListParams<T> addListParams) where T : class, new()
         {
 
-            var query = Db.InsertableWithAttr(addListParams.Entities);
+            var insertable = Db.InsertableWithAttr(addListParams.Entities);
             if (addListParams.InsertColumns != null)
             {
-                query = query.InsertColumns(addListParams.InsertColumns);
+                insertable = insertable.InsertColumns(addListParams.InsertColumns);
             }
-            return query;
+            return insertable;
         }
 
         /// <summary>
@@ -116,8 +116,8 @@ namespace ShinySqlSugar
         private static SplitInsertable<T> GetSplitInsertable<T>(AddListParams<T> addListParams) where T : class, new()
         {
 
-            var query = GetInsertable(addListParams);
-            return query.SplitTable();
+            var insertable = GetInsertable(addListParams);
+            return insertable.SplitTable();
         }
 
 

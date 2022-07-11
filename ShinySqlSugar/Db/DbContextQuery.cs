@@ -25,7 +25,7 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static ISugarQueryable<TResult> GetQueryable<T, TResult>(QueryListParams<T> queryListParams)
         {
-            queryListParams.Select = null;
+            queryListParams.Select = "";
             var query = GetQueryable(queryListParams).Select<TResult>();//去重
             return query;
         }
@@ -45,7 +45,7 @@ namespace ShinySqlSugar
             if (queryListParams.Take > 0) query.Take(queryListParams.Take);//指定条数
             if (queryListParams.Skip > 0) query.Skip(queryListParams.Skip);//跳过指定数量
             if (queryListParams.Distinct) query.Distinct();//去重
-            if (queryListParams.Select != null) query.Select(queryListParams.Select);//输出
+            if (!string.IsNullOrEmpty(queryListParams.Select)) query.Select(queryListParams.Select);//输出
             return query;
         }
 
@@ -177,7 +177,7 @@ namespace ShinySqlSugar
             var query = Db.QueryableWithAttr<T>().WhereIF(queryOneParams.Where != null, queryOneParams.Where);//条件
             if (!string.IsNullOrEmpty(queryOneParams.OrderBy)) query.OrderBy(queryOneParams.OrderBy);//排序
             if (queryOneParams.OrderbyExp != null) query.OrderBy(queryOneParams.OrderbyExp, queryOneParams.OrderByType);//排序
-            if (queryOneParams.Select != null) query.Select(queryOneParams.Select);//输出
+            if (!string.IsNullOrEmpty(queryOneParams.Select)) query.Select(queryOneParams.Select);//输出
             return query;
         }
 
@@ -190,7 +190,7 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static ISugarQueryable<TResult> GetQueryable<T, TResult>(QueryOneParams<T> queryOneParams)
         {
-            queryOneParams.Select = null;
+            queryOneParams.Select = "";
             var query = GetQueryable(queryOneParams).Select<TResult>();
             return query;
         }
