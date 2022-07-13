@@ -8,7 +8,7 @@ namespace ShinySqlSugar
     /// 修改参数
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class UpdateParams<T> where T : class, new()
+    public class UpdateParams<T> : BaseParams where T : class, new()
     {
         /// <summary>
         /// 是否分表

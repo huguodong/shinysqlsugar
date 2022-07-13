@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
 		<Nullable>enable</Nullable>
-		<Version>1.0.6</Version>
+		<Version>1.0.9</Version>
 		<Authors>huguodong</Authors>
 		<Company>shiny</Company>
 		<Description>ORM操作数据库,使用的sqlsugar单例模式

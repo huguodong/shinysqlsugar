@@ -8,7 +8,7 @@ namespace ShinySqlSugar
     /// <summary>
     /// 查询参数
     /// </summary>
-    public class QueryParams<T>
+    public class QueryParams<T> : BaseParams
     {
         /// <summary>
         /// 条件语句:对应sql的where

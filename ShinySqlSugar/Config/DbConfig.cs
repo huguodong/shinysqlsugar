@@ -17,6 +17,11 @@ namespace ShinySqlSugar
         /// 动态表过滤器配置
         /// </summary>
         public static List<TableFilters> Filters = new List<TableFilters>();
+
+        /// <summary>
+        /// 是否输出SQL语句
+        /// </summary>
+        public static bool OutputSql = false;
     }
 
     /// <summary>

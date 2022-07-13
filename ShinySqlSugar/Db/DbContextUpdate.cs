@@ -42,6 +42,10 @@ namespace ShinySqlSugar
             {
                 updateable = Db.UpdateableWithAttr<T>().SetColumns(updateOneParams.SetsColumns);
             }
+            if (!string.IsNullOrEmpty(updateOneParams.As))
+            {
+                updateable.AS(updateOneParams.As);
+            }
             if (updateOneParams.Where != null)
             {
                 updateable.Where(updateOneParams.Where);
@@ -118,6 +122,7 @@ namespace ShinySqlSugar
             if (updateListParams.Entities != null)//有实体
             {
                 updateable = Db.UpdateableWithAttr(updateListParams.Entities);
+
                 if (updateListParams.IgnoreColumns != null)
                 {
                     updateable.IgnoreColumns(updateListParams.IgnoreColumns);
@@ -134,6 +139,10 @@ namespace ShinySqlSugar
             else//无实体
             {
                 updateable = Db.UpdateableWithAttr<T>().SetColumns(updateListParams.SetsColumns);
+            }
+            if (!string.IsNullOrEmpty(updateListParams.As))
+            {
+                updateable.AS(updateListParams.As);
             }
             if (updateListParams.Where != null)
             {

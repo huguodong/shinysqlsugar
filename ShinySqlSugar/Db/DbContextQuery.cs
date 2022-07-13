@@ -38,8 +38,12 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static ISugarQueryable<T> GetQueryable<T>(QueryListParams<T> queryListParams)
         {
-            var query = Db.QueryableWithAttr<T>().WhereIF(queryListParams.Where != null, queryListParams.Where);//条件
-
+            var query = Db.QueryableWithAttr<T>();
+            if (string.IsNullOrEmpty(queryListParams.As))
+            {
+                query.AS(queryListParams.As);
+            }
+            query.WhereIF(queryListParams.Where != null, queryListParams.Where);//条件
             if (!string.IsNullOrEmpty(queryListParams.OrderBy)) query.OrderBy(queryListParams.OrderBy);//排序
             if (queryListParams.OrderbyExp != null) query.OrderBy(queryListParams.OrderbyExp, queryListParams.OrderByType);//排序
             if (queryListParams.Take > 0) query.Take(queryListParams.Take);//指定条数
@@ -174,7 +178,12 @@ namespace ShinySqlSugar
         /// <returns></returns>
         public static ISugarQueryable<T> GetQueryable<T>(QueryOneParams<T> queryOneParams)
         {
-            var query = Db.QueryableWithAttr<T>().WhereIF(queryOneParams.Where != null, queryOneParams.Where);//条件
+            var query = Db.QueryableWithAttr<T>();
+            if (string.IsNullOrEmpty(queryOneParams.As))
+            {
+                query.AS(queryOneParams.As);
+            }
+            query.WhereIF(queryOneParams.Where != null, queryOneParams.Where);//条件
             if (!string.IsNullOrEmpty(queryOneParams.OrderBy)) query.OrderBy(queryOneParams.OrderBy);//排序
             if (queryOneParams.OrderbyExp != null) query.OrderBy(queryOneParams.OrderbyExp, queryOneParams.OrderByType);//排序
             if (!string.IsNullOrEmpty(queryOneParams.Select)) query.Select(queryOneParams.Select);//输出

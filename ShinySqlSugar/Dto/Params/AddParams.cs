@@ -8,7 +8,7 @@ namespace ShinySqlSugar
     /// 插入参数
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class AddParams<T> where T : class, new()
+    public class AddParams<T> : BaseParams where T : class, new()
     {
 
         /// <summary>

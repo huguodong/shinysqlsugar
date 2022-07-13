@@ -21,6 +21,10 @@ namespace ShinySqlSugar
         {
 
             var insertable = Db.InsertableWithAttr(addOneParams.Entity).IgnoreColumns(addOneParams.IgnoreColumns);
+            if (string.IsNullOrEmpty(addOneParams.As))
+            {
+                insertable.AS(addOneParams.As);
+            }
             if (addOneParams.InsertColumns != null)
             {
                 insertable.InsertColumns(addOneParams.InsertColumns);
@@ -100,6 +104,10 @@ namespace ShinySqlSugar
         {
 
             var insertable = Db.InsertableWithAttr(addListParams.Entities);
+            if (string.IsNullOrEmpty(addListParams.As))
+            {
+                insertable.AS(addListParams.As);
+            }
             if (addListParams.InsertColumns != null)
             {
                 insertable = insertable.InsertColumns(addListParams.InsertColumns);

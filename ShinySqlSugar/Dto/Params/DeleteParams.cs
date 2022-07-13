@@ -11,7 +11,7 @@ namespace ShinySqlSugar
     /// <summary>
     /// 删除参数
     /// </summary>
-    public class DeleteParams<T> where T : class, new()
+    public class DeleteParams<T> : BaseParams where T : class, new()
     {
 
         /// <summary>
