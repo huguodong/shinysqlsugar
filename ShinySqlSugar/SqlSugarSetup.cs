@@ -18,7 +18,7 @@ namespace ShinySqlSugar
         /// <param name="connectionConfigs">连接配置</param>
         /// <param name="filters">动态表过滤器</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public static IServiceCollection AddSqlSugar(this IServiceCollection services, List<ConnectionConfig> connectionConfigs, bool outputSql = true, List<TableFilters> filters = null)
+        public static IServiceCollection AddSqlSugar(this IServiceCollection services, List<ConnectionConfig> connectionConfigs, List<TableFilters> filters = null)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             DbConfig.ConnectionConfigs = connectionConfigs;
